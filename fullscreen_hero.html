@@ -1,0 +1,114 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body { margin:0; padding:0; height:100%; width:100%; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:#111827; color:#ffffff; }
+    .container { display:flex; flex-direction:column; height:100%; }
+    .hero { flex:0 0 45%; background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800'); background-size:cover; background-position:center; position:relative; }
+    .close { position:absolute; top: calc(14px + var(--lmk-safe-top, 0px)); right:14px; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,.5); color:#fff; text-decoration:none; display:flex; align-items:center; justify-content:center; font-size:18px; line-height:1; }
+    .body { flex:1 1 auto; padding: 28px 24px calc(28px + var(--lmk-safe-bottom, 0px)); display:flex; flex-direction:column; justify-content:center; text-align:center; gap:14px; }
+    h1 { margin:0; font-size:26px; font-weight:700; line-height:1.2; }
+    p  { margin:0; font-size:16px; line-height:1.5; opacity:.85; }
+    .actions { margin-top:22px; display:flex; flex-direction:column; gap:10px; align-items:stretch; }
+    .cta { display:block; padding:14px 20px; background:#7c3aed; color:#ffffff; text-decoration:none; border-radius:10px; font-weight:600; font-size:16px; text-align:center; }
+    .skip { display:block; padding:10px; color:inherit; opacity:.75; text-decoration:underline; font-size:14px; text-align:center; }
+  </style>
+<style>
+/* beefree-popup-processor: neutralize BeeFree fixed widths, let WebView decide */
+html, body { margin: 0 !important; padding: 0 !important; }
+.bee-popup-container, .bee-page-container { width: 100% !important; }
+.bee-popup-row-content, .bee-row-content { max-width: 100% !important; }
+img.bee-fullwidthOnMobile, img.bee-popup-autowidth { max-width: 100% !important; height: auto !important; }
+/* beefree-popup-processor: fullscreen override — force flex column chain */
+html, body { height: 100% !important; min-height: 100% !important; }
+.bee-popup-container, .bee-page-container,
+.bee-popup-rows-container, .bee-rows-container,
+.bee-popup-row, .bee-row,
+.bee-popup-row-content, .bee-row-content,
+.bee-popup-col, .bee-col,
+.bee-popup-block, .bee-block {
+  height: 100% !important;
+  min-height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+}
+</style></head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <a class="close" href="javascript:void(0)" onclick="LemniskInApp.close(); return false;">×</a>
+    </div>
+    <div class="body">
+      <h1>Welcome to PrimeBank</h1>
+      <p>Manage your money, send payments, and track your spending — all in one place.</p>
+      <div class="actions">
+        <a class="cta" href="javascript:void(0)" onclick="LemniskInApp.cta('adcbdemo://home', 'Get started'); return false;">Get started</a>
+        <a class="skip" href="javascript:void(0)" onclick="LemniskInApp.close(); return false;">Maybe later</a>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+(function () {
+  // Cross-platform bridge — single window.LemniskInApp surface for both
+  // iOS (WKScriptMessageHandler "LemniskInApp") and Android (@JavascriptInterface "LemniskInAppNative").
+  // Falls back to console in browser preview so popups don't break outside the app.
+  var bridge;
+  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.LemniskInApp) {
+    var ios = window.webkit.messageHandlers.LemniskInApp;
+    bridge = {
+      cta:   function (d, l) { ios.postMessage({ action: "cta", deeplink: d, label: l }); },
+      close: function ()     { ios.postMessage({ action: "close" }); },
+      link:  function (u)    { ios.postMessage({ action: "link", url: u }); },
+      form:  function (j)    {
+        var data = {};
+        try { data = JSON.parse(j); } catch (e) {}
+        ios.postMessage({ action: "form", data: data });
+      },
+    };
+  } else if (window.LemniskInAppNative) {
+    var android = window.LemniskInAppNative;
+    bridge = {
+      cta:   function (d, l) { android.cta(d, l); },
+      close: function ()     { android.close(); },
+      link:  function (u)    { android.link(u); },
+      form:  function (j)    { android.form(j); },
+    };
+  } else {
+    bridge = {
+      cta:   function (d, l) { console.log("[LemniskInApp] cta",   d, l); },
+      close: function ()     { console.log("[LemniskInApp] close"); },
+      link:  function (u)    { console.log("[LemniskInApp] link",  u); },
+      form:  function (j)    { console.log("[LemniskInApp] form",  j); },
+    };
+  }
+  window.LemniskInApp = bridge;
+
+  // Hook every <form> on the page: capture the submit, serialize inputs,
+  // deliver to the native side as JSON.
+  function hookForms() {
+    var forms = document.querySelectorAll("form");
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener("submit", function (e) {
+        e.preventDefault();
+        var data = {};
+        var inputs = this.querySelectorAll("input, select, textarea");
+        for (var j = 0; j < inputs.length; j++) {
+          var el = inputs[j];
+          if (el.type === "submit" || el.type === "button") continue;
+          var key = el.name || el.id || ("field" + j);
+          data[key] = el.value;
+        }
+        window.LemniskInApp.form(JSON.stringify(data));
+      });
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", hookForms);
+  } else {
+    hookForms();
+  }
+})();
+</script></body></html>

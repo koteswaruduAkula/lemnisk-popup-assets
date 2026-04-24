@@ -1,0 +1,223 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title></title><style>
+/* beefree-popup-processor: neutralize BeeFree fixed widths, let WebView decide */
+html, body { margin: 0 !important; padding: 0 !important; }
+.bee-popup-container, .bee-page-container { width: 100% !important; }
+.bee-popup-row-content, .bee-row-content { max-width: 100% !important; }
+img.bee-fullwidthOnMobile, img.bee-popup-autowidth { max-width: 100% !important; height: auto !important; }
+/* beefree-popup-processor: modal mode — transparent body so scrim shows */
+html, body { background: transparent !important; }
+</style></head><body>
+<div class="bee-popup-container">
+	<style>
+		.bee-popup-row-1,
+		.bee-popup-row-2 .bee-popup-row-content {
+			background-color: #ed9458
+		}
+
+		.bee-popup-container div {
+			margin: 0;
+			padding: 0
+		}
+
+		.bee-popup-container img {
+			border: 0
+		}
+
+		.bee-popup-container {
+			color: #000000;
+			font-family: Arial, Helvetica Neue, Helvetica, sans-serif
+		}
+
+		.bee-popup-container * {
+			box-sizing: border-box
+		}
+
+		.bee-popup-container a {
+			color: #0068A5
+		}
+
+		.bee-popup-container .bee-popup-row {
+			position: relative
+		}
+
+		.bee-popup-container .bee-popup-row-content {
+			max-width: 315px;
+			position: relative;
+			margin: 0 auto;
+			display: flex
+		}
+
+		.bee-popup-container .bee-popup-row-content .bee-popup-col-w6 {
+			flex: 6
+		}
+
+		.bee-popup-container .bee-popup-row-content .bee-popup-col-w12 {
+			flex: 12
+		}
+
+		.bee-popup-button a {
+			text-decoration: none
+		}
+
+		.bee-popup-button-content {
+			text-align: center
+		}
+
+		.bee-popup-addon {
+			overflow: auto
+		}
+
+		.bee-popup-addon .bee-popup-center {
+			margin: 0 auto
+		}
+
+		.bee-popup-row-1 .bee-popup-col-1 .bee-popup-block-1 {
+			width: 100%
+		}
+
+		.bee-popup-row-1 .bee-popup-row-content,
+		.bee-popup-row-2 .bee-popup-row-content {
+			background-repeat: no-repeat;
+			border-radius: 0;
+			color: #000000
+		}
+
+		.bee-popup-addon img {
+			display: block;
+			width: 100%
+		}
+
+		.bee-popup-row-1 {
+			background-repeat: no-repeat
+		}
+
+		.bee-popup-row-1 .bee-popup-col-1,
+		.bee-popup-row-2 .bee-popup-col-1,
+		.bee-popup-row-2 .bee-popup-col-2 {
+			padding-bottom: 5px;
+			padding-top: 5px
+		}
+
+		.bee-popup-row-2 {
+			background-repeat: no-repeat
+		}
+
+		.bee-popup-row-2 .bee-popup-col-1 .bee-popup-block-1,
+		.bee-popup-row-2 .bee-popup-col-2 .bee-popup-block-1 {
+			padding: 10px;
+			text-align: center
+		}
+
+		@media (max-width:500px) {
+			.bee-popup-row-content:not(.no_stack) {
+				display: block;
+				max-width: 315px
+			}
+
+			.bee-popup-row-1 .bee-popup-col-1 {
+				padding: 0 0 5px !important
+			}
+
+			.bee-popup-row-2 .bee-popup-col-1,
+			.bee-popup-row-2 .bee-popup-col-2 {
+				padding: 0 !important
+			}
+		}
+
+		.bee-popup-row-2 .bee-popup-col-1 .bee-popup-block-1 a,
+		.bee-popup-row-2 .bee-popup-col-2 .bee-popup-block-1 a {
+			background-color: #744df2;
+			border-radius: 4px;
+			color: #ffffff;
+			direction: ltr;
+			font-family: inherit;
+			font-size: 14px;
+			font-weight: 400;
+			letter-spacing: 0;
+			line-height: 200%;
+			padding: 5px 20px;
+			width: auto
+		}
+	</style>
+	<div class="bee-popup-rows-container">
+		<div class="bee-popup-row bee-popup-row-1">
+			<div class="bee-popup-row-content">
+				<div class="bee-popup-col bee-popup-col-1 bee-popup-col-w12">
+					<div class="bee-popup-block bee-popup-block-1 bee-popup-addon"><img class="bee-popup-center bee-popup-autowidth" src="https://media0.giphy.com/media/v1.Y2lkPTIwZWI0ZTlkeGNhbzA0OWRuOXFzOWlwNmVvOTZ4NW5pZWtyMW11Mno3OHV2MDJ4NCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6flCDeWhM9jpsgr3b8/giphy.gif" style="max-width:315px;" alt="" title=""></div>
+				</div>
+			</div>
+		</div>
+		<div class="bee-popup-row bee-popup-row-2">
+			<div class="bee-popup-row-content no_stack">
+				<div class="bee-popup-col bee-popup-col-1 bee-popup-col-w6">
+					<div class="bee-popup-block bee-popup-block-1 bee-popup-button"><a style="font-size: 14px; display: inline-block;" class="bee-popup-button-content" href="javascript:void(0)" onclick="LemniskInApp.cta('adcbdemo://home', 'Grab the offer!'); return false;"><span style="word-break: break-word; font-size: 14px; line-height: 200%; letter-spacing: normal;">Grab the offer!</span></a></div>
+				</div>
+				<div class="bee-popup-col bee-popup-col-2 bee-popup-col-w6">
+					<div class="bee-popup-block bee-popup-block-1 bee-popup-button"><a style="font-size: 14px; display: inline-block;" class="bee-popup-button-content" href="javascript:void(0)" onclick="LemniskInApp.close(); return false;"><span style="word-break: break-word; font-size: 14px; line-height: 200%; letter-spacing: normal;">Dismiss</span></a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+(function () {
+  // Cross-platform bridge — single window.LemniskInApp surface for both
+  // iOS (WKScriptMessageHandler "LemniskInApp") and Android (@JavascriptInterface "LemniskInAppNative").
+  // Falls back to console in browser preview so popups don't break outside the app.
+  var bridge;
+  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.LemniskInApp) {
+    var ios = window.webkit.messageHandlers.LemniskInApp;
+    bridge = {
+      cta:   function (d, l) { ios.postMessage({ action: "cta", deeplink: d, label: l }); },
+      close: function ()     { ios.postMessage({ action: "close" }); },
+      link:  function (u)    { ios.postMessage({ action: "link", url: u }); },
+      form:  function (j)    {
+        var data = {};
+        try { data = JSON.parse(j); } catch (e) {}
+        ios.postMessage({ action: "form", data: data });
+      },
+    };
+  } else if (window.LemniskInAppNative) {
+    var android = window.LemniskInAppNative;
+    bridge = {
+      cta:   function (d, l) { android.cta(d, l); },
+      close: function ()     { android.close(); },
+      link:  function (u)    { android.link(u); },
+      form:  function (j)    { android.form(j); },
+    };
+  } else {
+    bridge = {
+      cta:   function (d, l) { console.log("[LemniskInApp] cta",   d, l); },
+      close: function ()     { console.log("[LemniskInApp] close"); },
+      link:  function (u)    { console.log("[LemniskInApp] link",  u); },
+      form:  function (j)    { console.log("[LemniskInApp] form",  j); },
+    };
+  }
+  window.LemniskInApp = bridge;
+
+  // Hook every <form> on the page: capture the submit, serialize inputs,
+  // deliver to the native side as JSON.
+  function hookForms() {
+    var forms = document.querySelectorAll("form");
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener("submit", function (e) {
+        e.preventDefault();
+        var data = {};
+        var inputs = this.querySelectorAll("input, select, textarea");
+        for (var j = 0; j < inputs.length; j++) {
+          var el = inputs[j];
+          if (el.type === "submit" || el.type === "button") continue;
+          var key = el.name || el.id || ("field" + j);
+          data[key] = el.value;
+        }
+        window.LemniskInApp.form(JSON.stringify(data));
+      });
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", hookForms);
+  } else {
+    hookForms();
+  }
+})();
+</script></body></html>
