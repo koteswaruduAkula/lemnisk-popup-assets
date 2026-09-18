@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>
+html,body{margin:0;padding:0;height:100%;overflow:hidden;font-family:-apple-system,Roboto,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%}
+body{background:transparent;color:#2b2320}
+.card{margin:0 12px;background:#fff;border-radius:14px;overflow:hidden}
+.hero{height:120px;background:linear-gradient(135deg,#f6d9cf 0%,#ead0c6 100%)}
+.txt{padding:18px 20px 16px}
+.title{font-size:18px;font-weight:700;line-height:1.25;margin:0 0 8px}
+.body{font-size:14px;line-height:1.45;color:#5b4f4a;margin:0}
+.cta{display:block;background:#e0683f;color:#fff;text-decoration:none;text-align:center;padding:14px;font-weight:700;font-size:15px}
+</style></head><body>
+<div class="card"><div class="hero"></div>
+<div class="txt"><p class="title">Transparent body (inner card)</p><p class="body">The template draws its own rounded card on a transparent page; the SDK renders it exactly as designed.</p></div>
+<a class="cta" href="#" onclick="lmkCta('https://lemnisk.co','OK');return false;">OK</a></div>
+<script>
+function lmkCta(u,l){if(window.LemniskInAppNative){LemniskInAppNative.cta(u,l)}else if(window.LemniskInApp){LemniskInApp.cta(u,l)}}
+</script></body></html>
