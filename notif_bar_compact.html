@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title></title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; background: transparent; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .bar { display: flex; align-items: center; gap: 12px; background: #ffffff; padding: 12px 14px 12px 12px; width: 100%; }
+  .icon { flex: 0 0 40px; width: 40px; height: 40px; border-radius: 10px; background: #FDE8E1; display: flex; align-items: center; justify-content: center; }
+  .icon svg { width: 22px; height: 22px; }
+  .text { flex: 1 1 auto; min-width: 0; }
+  .title { font-size: 14px; font-weight: 700; color: #1A1A1A; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .body  { font-size: 12px; color: #6B7280; line-height: 1.35; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  a.cta { flex: 0 0 auto; display: inline-block; background: #E8593A; color: #ffffff; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 8px; text-decoration: none; line-height: 1.2; white-space: nowrap; }
+  button.close { flex: 0 0 auto; width: 28px; height: 28px; border: none; border-radius: 50%; background: rgba(0,0,0,0.06); color: #4B5563; font-size: 15px; line-height: 28px; text-align: center; cursor: pointer; }
+</style></head>
+<body>
+<div class="bar">
+  <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8593A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+  <div class="text">
+    <div class="title">Notif bar: 2% cashback today</div>
+    <div class="body">Pay any bill before midnight to claim it.</div>
+  </div>
+  <a class="cta" href="javascript:void(0)" onclick="LemniskInApp.cta('adcbdemo://home', 'View'); return false;">View</a>
+  <button class="close" aria-label="Close" onclick="LemniskInApp.close(); return false;">&#10005;</button>
+</div>
+<script>
+(function () {
+  // Cross-platform bridge — single window.LemniskInApp surface for both
+  // iOS (WKScriptMessageHandler "LemniskInApp") and Android (@JavascriptInterface "LemniskInAppNative").
+  var bridge;
+  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.LemniskInApp) {
+    var ios = window.webkit.messageHandlers.LemniskInApp;
+    bridge = {
+      cta:   function (d, l) { ios.postMessage({ action: "cta", deeplink: d, label: l }); },
+      close: function ()     { ios.postMessage({ action: "close" }); },
+      link:  function (u)    { ios.postMessage({ action: "link", url: u }); },
+      form:  function (j)    { var data = {}; try { data = JSON.parse(j); } catch (e) {} ios.postMessage({ action: "form", data: data }); }
+    };
+  } else if (window.LemniskInAppNative) {
+    var android = window.LemniskInAppNative;
+    bridge = {
+      cta:   function (d, l) { android.cta(d, l); },
+      close: function ()     { android.close(); },
+      link:  function (u)    { android.link(u); },
+      form:  function (j)    { android.form(j); }
+    };
+  } else {
+    bridge = {
+      cta:   function (d, l) { console.log("[LemniskInApp] cta",   d, l); },
+      close: function ()     { console.log("[LemniskInApp] close"); },
+      link:  function (u)    { console.log("[LemniskInApp] link",  u); },
+      form:  function (j)    { console.log("[LemniskInApp] form",  j); }
+    };
+  }
+  window.LemniskInApp = bridge;
+})();
+</script>
+</body></html>
